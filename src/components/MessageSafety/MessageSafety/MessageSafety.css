@@ -1,1 +1,244 @@
-/* MessageSafety styles */
+
+
+.message-safety-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.message-safety-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 28px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+.message-safety-tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--color-divider);
+  padding-bottom: 2px;
+  margin-bottom: 24px;
+}
+
+.message-safety-tab {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  border: none;
+  background: transparent;
+  padding: 0 0 10px 0;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.message-safety-tab:hover {
+  color: var(--color-text);
+}
+
+.message-safety-tab.active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.message-safety-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+.message-safety-main-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  height: calc(100vh - 180px);
+  min-height: 500px;
+}
+
+.message-safety-main-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.message-safety-list-panel {
+  width: 320px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--color-divider);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.message-safety-window-panel {
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.message-safety-spam-card,
+.message-safety-rules-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.message-safety-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.message-safety-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.message-safety-textarea {
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-family: monospace;
+  font-size: 14px;
+  color: var(--color-text);
+  resize: vertical;
+  min-height: 80px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.message-safety-textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.message-safety-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.message-safety-row:not(:last-child) {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.message-safety-row:first-child {
+  padding-top: 0;
+}
+
+.message-safety-row:last-child {
+  padding-bottom: 0;
+}
+
+.message-safety-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.message-safety-row-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.message-safety-row-desc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.message-safety-toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.message-safety-toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.message-safety-toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-surface-dynamic);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition: 0.2s ease;
+}
+
+.message-safety-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  border-radius: var(--radius-full);
+  transition: 0.2s ease;
+}
+
+.message-safety-toggle-input:checked + .message-safety-toggle-slider {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.message-safety-toggle-input:checked + .message-safety-toggle-slider:before {
+  transform: translateX(20px);
+}
+
+.message-safety-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  box-shadow: var(--shadow-md);
+  z-index: 999;
+  animation: toastin 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.message-safety-toast-icon {
+  color: var(--color-success);
+}
+
+.message-safety-toast-text {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+

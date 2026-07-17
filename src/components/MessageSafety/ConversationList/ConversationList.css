@@ -1,1 +1,112 @@
-/* ConversationList styles */
+.conversation-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.conversation-list-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.conversation-list-item:hover {
+  background: var(--color-surface-offset);
+}
+
+.conversation-list-item.active {
+  background: var(--color-surface-offset);
+  border-color: var(--color-border);
+}
+
+.conversation-list-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  width: 100%;
+}
+
+.conversation-list-item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.conversation-list-item-time {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.conversation-list-item-desc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conversation-list-item-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.conversation-list-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.conversation-list-badge-severity-medium {
+  border: 1px solid rgba(209, 153, 0, 0.4);
+  color: var(--color-gold);
+  background: rgba(209, 153, 0, 0.1);
+}
+
+.conversation-list-badge-severity-high {
+  border: 1px solid rgba(161, 44, 123, 0.4);
+  color: var(--color-error);
+  background: rgba(161, 44, 123, 0.1);
+}
+
+.conversation-list-badge-severity-low {
+  border: 1px solid rgba(122, 121, 116, 0.4);
+  color: var(--color-text-muted);
+  background: rgba(122, 121, 116, 0.1);
+}
+
+.conversation-list-badge-reason-scam {
+  border: 1px solid rgba(150, 66, 25, 0.4);
+  color: var(--color-warning);
+  background: rgba(150, 66, 25, 0.1);
+}
+
+.conversation-list-badge-reason-threat {
+  border: 1px solid rgba(161, 44, 123, 0.4);
+  color: var(--color-error);
+  background: rgba(161, 44, 123, 0.1);
+}
+
+.conversation-list-badge-reason-harassment {
+  border: 1px solid rgba(161, 44, 123, 0.4);
+  color: var(--color-error);
+  background: rgba(161, 44, 123, 0.1);
+}
+
+.conversation-list-badge-reason-spam {
+  border: 1px solid rgba(150, 66, 25, 0.4);
+  color: var(--color-warning);
+  background: rgba(150, 66, 25, 0.1);
+}

@@ -1,1 +1,46 @@
-/* MessageHeader styles */
+
+.message-header-topbar {
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.message-header-menu-toggle {
+  cursor: pointer;
+}
+
+.message-header-back-btn {
+  cursor: pointer;
+}
+
+.message-header-title {
+  user-select: none;
+}
+
+.message-header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.message-header-search-box {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.message-header-search-box:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.message-header-search-input {
+  background: none;
+  border: none;
+  font-size: 13px;
+  width: 100%;
+  color: var(--color-text);
+  outline: none;
+}
+
+.message-header-icon-btn {
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
