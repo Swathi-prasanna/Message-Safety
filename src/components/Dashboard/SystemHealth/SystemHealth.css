@@ -1,0 +1,54 @@
+.health-card {
+  background: color-mix(in oklab, var(--color-surface) 60%, transparent);
+  border-radius: 16px;
+  border: 1px solid var(--color-divider);
+  padding: 24px;
+}
+.health-card-head {
+  margin-bottom: 20px;
+}
+.health-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.health-card-sub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.health-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--color-divider);
+}
+.health-row:last-child {
+  border-bottom: none;
+}
+.health-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+.status-badge {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.badge-success { background: var(--color-success); color: #fff; }
+.badge-warning { background: var(--color-warning); color: #fff; }
+.badge-error { background: var(--color-error); color: #fff; }
+.badge-neutral { background: var(--color-surface-offset); color: var(--color-text-muted); }
+.badge-blue { background: var(--color-blue); color: #fff; }
+
+.dot-success { background: var(--color-success); }
+.dot-warning { background: var(--color-warning); }
+.dot-error { background: var(--color-error); }
+.dot-neutral { background: var(--color-text-muted); }

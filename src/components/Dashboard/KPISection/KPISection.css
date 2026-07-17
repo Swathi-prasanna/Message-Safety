@@ -1,0 +1,91 @@
+/* KPISection styles */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.kpi-card {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-divider);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.kpi-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.kpi-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+.kpi-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kpi-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.kpi-delta {
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.kpi-delta.up {
+  color: var(--color-success);
+}
+.kpi-delta.down {
+  color: var(--color-error);
+}
+.kpi-arrow {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.kpi-card:hover .kpi-arrow {
+  opacity: 1;
+}
+.kpi-trend-icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* Dynamic KPI Icon colors */
+.icon-total-users { background: var(--color-primary-highlight); color: var(--color-primary); }
+.icon-new-signups { background: var(--color-blue-highlight); color: var(--color-blue); }
+.icon-active-users { background: var(--color-blue-highlight); color: var(--color-blue); }
+.icon-verified-users { background: var(--color-success-highlight); color: var(--color-success); }
+.icon-reports-pending { background: var(--color-warning-highlight); color: var(--color-warning); }
+.icon-reports-resolved { background: var(--color-success-highlight); color: var(--color-success); }
+.icon-verifications-pending { background: var(--color-purple-highlight); color: var(--color-purple); }
+.icon-banned { background: var(--color-notification-highlight); color: var(--color-notification); }
+.icon-system-health { background: var(--color-success-highlight); color: var(--color-success); }
