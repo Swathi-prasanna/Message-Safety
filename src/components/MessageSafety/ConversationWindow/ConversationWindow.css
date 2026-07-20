@@ -42,13 +42,12 @@
   max-width: 75%;
 }
 
-/* Left messages: light background */
+
 .conversation-window-message-bubble.left {
   background: var(--color-surface-offset);
   border: 1px solid var(--color-divider);
 }
 
-/* Right messages: darker background */
 .conversation-window-message-bubble.right {
   background: var(--color-surface-dynamic);
   border: 1px solid var(--color-border);
@@ -61,7 +60,6 @@
   word-break: break-word;
 }
 
-/* Footer section styling */
 .conversation-window-footer {
   display: flex;
   align-items: center;
