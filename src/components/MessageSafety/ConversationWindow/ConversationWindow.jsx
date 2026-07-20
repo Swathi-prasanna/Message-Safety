@@ -35,7 +35,6 @@ const ConversationWindow = ({ report, onShowToast }) => {
 
   return (
     <div className="conversation-window-container">
-      {/* Header utilizing sub-components for modularity */}
       <div className="conversation-window-header">
         <MessageDetails 
           sender={report.sender} 
@@ -48,7 +47,6 @@ const ConversationWindow = ({ report, onShowToast }) => {
         />
       </div>
 
-      {/* Messages thread */}
       <div className="conversation-window-messages">
         {report.messages.map((message) => {
           const isRight = message.isRight;
@@ -66,8 +64,6 @@ const ConversationWindow = ({ report, onShowToast }) => {
           );
         })}
       </div>
-
-      {/* Footer Actions */}
       <div className="conversation-window-footer">
         <button 
           className="conversation-window-footer-btn" 
