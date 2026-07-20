@@ -87,7 +87,6 @@
   border-color: var(--color-border);
 }
 
-/* Mark Resolved Button */
 .conversation-window-footer-btn-resolve {
   display: flex;
   align-items: center;
