@@ -1,5 +1,7 @@
 import React from 'react';
-import { UserX, Trash2, MessageSquareOff, Ban, CheckCircle } from 'lucide-react';
+import { MessageSquareOff, Ban, CheckCircle } from 'lucide-react';
+import MessageDetails from '../MessageDetails/MessageDetails';
+import UserProfile from '../UserProfile/UserProfile';
 import './ConversationWindow.css';
 
 const ConversationWindow = ({ report, onShowToast }) => {
@@ -33,36 +35,20 @@ const ConversationWindow = ({ report, onShowToast }) => {
 
   return (
     <div className="conversation-window-container">
+      {/* Header utilizing sub-components for modularity */}
       <div className="conversation-window-header">
-        <div className="conversation-window-header-info">
-          <h4 className="conversation-window-header-title">
-            {report.sender} &rarr; {report.recipient}
-          </h4>
-          <span className="conversation-window-header-sub">
-            Reported for: {report.type}
-          </span>
-        </div>
-        <div className="conversation-window-header-actions">
-          <button 
-            className="conversation-window-header-btn" 
-            aria-label="Block sender"
-            title="Block sender"
-            type="button"
-            onClick={handleBlockSender}
-          >
-            <UserX size={18} />
-          </button>
-          <button 
-            className="conversation-window-header-btn" 
-            aria-label="Delete message"
-            title="Delete message"
-            type="button"
-            onClick={handleDeleteReport}
-          >
-            <Trash2 size={18} />
-          </button>
-        </div>
+        <MessageDetails 
+          sender={report.sender} 
+          recipient={report.recipient} 
+          type={report.type} 
+        />
+        <UserProfile 
+          onBlockSender={handleBlockSender} 
+          onDeleteReport={handleDeleteReport} 
+        />
       </div>
+
+      {/* Messages thread */}
       <div className="conversation-window-messages">
         {report.messages.map((message) => {
           const isRight = message.isRight;
@@ -80,7 +66,8 @@ const ConversationWindow = ({ report, onShowToast }) => {
           );
         })}
       </div>
-      
+
+      {/* Footer Actions */}
       <div className="conversation-window-footer">
         <button 
           className="conversation-window-footer-btn" 

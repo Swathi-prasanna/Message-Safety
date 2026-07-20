@@ -1,1 +1,18 @@
+.message-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
+.message-details-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.message-details-sub {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0;
+}

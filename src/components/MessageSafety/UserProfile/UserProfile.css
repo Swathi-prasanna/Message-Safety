@@ -1,1 +1,20 @@
-/* UserProfile styles */
+.user-profile-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.user-profile-btn {
+  color: var(--color-text-muted);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
+}
+
+.user-profile-btn:hover {
+  background: var(--color-surface-offset);
+  color: var(--color-text);
+}

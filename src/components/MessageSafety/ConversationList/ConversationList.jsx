@@ -6,10 +6,7 @@ const ConversationList = ({ reports = [], selectedId, onSelect }) => {
     <div className="conversation-list-container">
       {reports.map((report) => {
         const isActive = report.id === selectedId;
-        
-        // Severity color styling classes
         const severityClass = `conversation-list-badge-severity-${report.severity.toLowerCase()}`;
-        // Reason color styling classes
         const reasonClass = `conversation-list-badge-reason-${report.type.toLowerCase()}`;
 
         return (
