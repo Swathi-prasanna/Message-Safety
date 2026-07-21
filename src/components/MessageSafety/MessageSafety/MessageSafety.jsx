@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, X, ArrowLeft } from 'lucide-react';
 import MessageHeader from '../MessageHeader/MessageHeader';
 import ConversationList from '../ConversationList/ConversationList';
 import ConversationWindow from '../ConversationWindow/ConversationWindow';
@@ -213,13 +213,85 @@ const INITIAL_REPORTS = [
   }
 ];
 
+const INITIAL_SAFETY_RULES = [
+  { id: 'rateLimiting', title: 'Rate Limiting', desc: 'Limit the number of messages new accounts can send per minute.', enabled: true },
+  { id: 'restrictUnverified', title: 'Restrict Unverified DMs', desc: 'Block direct messages from unverified accounts to verified users.', enabled: false },
+  { id: 'blockSuspiciousLinks', title: 'Block Suspicious Links', desc: 'Automatically detect and block malicious or phishing URLs.', enabled: true },
+  { id: 'spamKeywordFilter', title: 'Spam Keyword Filter', desc: 'Detect and filter messages containing spam keywords.', enabled: true },
+  { id: 'duplicateDetection', title: 'Duplicate Message Detection', desc: 'Prevent users from repeatedly sending the same message.', enabled: true },
+  { id: 'floodProtection', title: 'Flood Protection', desc: 'Temporarily limit messaging when too many messages are sent in a short time.', enabled: true },
+  { id: 'maxMsgLength', title: 'Maximum Message Length', desc: 'Restrict the maximum number of characters per message.', enabled: true },
+  { id: 'fileUploadRestrictions', title: 'File Upload Restrictions', desc: 'Allow only approved file types and enforce maximum upload size.', enabled: false },
+  { id: 'offensiveWordFilter', title: 'Offensive Word Filter', desc: 'Automatically detect and block abusive or inappropriate language.', enabled: true },
+  { id: 'autoHideReported', title: 'Auto Hide Reported Messages', desc: 'Automatically hide messages that exceed the report threshold until reviewed.', enabled: true },
+  { id: 'captchaNewAccounts', title: 'CAPTCHA for New Accounts', desc: 'Require CAPTCHA verification before sending messages.', enabled: false },
+  { id: 'profanityDetection', title: 'Profanity Detection', desc: 'Detect and filter offensive language in real time.', enabled: true },
+  { id: 'linkPreviewProtection', title: 'Link Preview Protection', desc: 'Scan URLs before generating previews to prevent malicious content.', enabled: true },
+  { id: 'mediaScanning', title: 'Media Content Scanning', desc: 'Scan uploaded images and files for unsafe or prohibited content.', enabled: true }
+];
+
 const MessageSafety = () => {
   const [activeTab, setActiveTab] = useState('reported');
   const [selectedId, setSelectedId] = useState(1);
   const [reports, setReports] = useState(INITIAL_REPORTS);
 
   const [toast, setToast] = useState(null);
-  const [triggerOpenModal, setTriggerOpenModal] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(null);
+
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [newSender, setNewSender] = useState('');
+  const [newRecipient, setNewRecipient] = useState('');
+  const [newMessageText, setNewMessageText] = useState('');
+  const [newCategory, setNewCategory] = useState('Spam');
+  const [newSeverity, setNewSeverity] = useState('Medium');
+
+  const handleAddUserSubmit = (e) => {
+    e.preventDefault();
+    if (!newSender.trim() || !newRecipient.trim() || !newMessageText.trim()) {
+      showToast('Please fill in all required fields');
+      return;
+    }
+
+    const formattedSender = newSender.startsWith('@') ? newSender.trim() : `@${newSender.trim()}`;
+    const formattedRecipient = newRecipient.startsWith('@') ? newRecipient.trim() : `@${newRecipient.trim()}`;
+    const newId = Date.now();
+
+    const newReportObj = {
+      id: newId,
+      sender: formattedSender,
+      recipient: formattedRecipient,
+      time: '1m',
+      description: `Reported: ${newMessageText.trim()}`,
+      severity: newSeverity,
+      type: newCategory,
+      messages: [
+        {
+          id: newId + 1,
+          senderId: 'USR-' + Math.floor(1000 + Math.random() * 9000),
+          senderName: formattedSender.replace('@', ''),
+          sender: formattedSender,
+          receiverId: 'USR-' + Math.floor(1000 + Math.random() * 9000),
+          receiverName: formattedRecipient.replace('@', ''),
+          recipient: formattedRecipient,
+          text: newMessageText.trim(),
+          dateTime: formatDateTime(),
+          isRight: false
+        }
+      ]
+    };
+
+    setReports((prev) => [newReportObj, ...prev]);
+    setSelectedId(newId);
+    setShowAddUserModal(false);
+
+    setNewSender('');
+    setNewRecipient('');
+    setNewMessageText('');
+    setNewCategory('Spam');
+    setNewSeverity('Medium');
+
+    showToast(`Added conversation for ${formattedSender}`);
+  };
 
   const showToast = (message) => {
     setToast({ message, id: Date.now() });
@@ -236,99 +308,9 @@ const MessageSafety = () => {
 
   const [blockedWords, setBlockedWords] = useState('crypto giveaway, easy money, dm for followers, bit.ly');
   const [linkScanning, setLinkScanning] = useState(true);
-  const [rateLimiting, setRateLimiting] = useState(true);
-  const [restrictDMs, setRestrictDMs] = useState(false);
 
-<<<<<<< HEAD
-  const reports = [
-    {
-      id: 1,
-      sender: '@weiz',
-      recipient: '@spammer99',
-      time: '10m',
-      description: 'Reported: scam link shared in DM',
-      severity: 'Medium',
-      type: 'Scam',
-      messages: [
-        { id: 101, 
-          sender: '@weiz', 
-          text: 'Hey! Check this out, easy money 💰 bit.ly/xyz123', 
-          isRight: false 
-        },
-        { id: 102, 
-          sender: '@spammer99',
-           text: 'Not interested, please stop messaging me.', 
-           isRight: true 
-          },
-        { 
-          id: 103,
-           sender: '@weiz', 
-           text: 'Come on, everyone doing it. Last chance!',
-            isRight: false 
-          }
-      ]
-    },
-    {
-      id: 2,
-      sender: '@priya.n',
-      recipient: '@sofia.r',
-      time: '32m',
-      description: 'Reported: threatening language',
-      severity: 'High',
-      type: 'Threat',
-      messages: [
-        { 
-          id: 201, 
-          sender: '@priya.n', 
-          text: 'You will regret ignoring me.',
-           isRight: false 
-          },
-        { 
-          id: 202,
-           sender: '@sofia.r',
-           text: 'Please stop, I am blocking you.', 
-           isRight: true 
-          },
-        { 
-          id: 203, 
-          sender: '@priya.n',
-           text: 'This is not over.',
-            isRight: false 
-          }
-      ]
-    },
-    {
-      id: 3,
-      sender: '@meera_i',
-      recipient: '@kabirm',
-      time: '1h',
-      description: 'Reported: unwanted contact after block',
-      severity: 'High',
-      type: 'Harassment',
-      messages: [
-        { id: 301,
-           sender: '@meera_i',
-            text: 'Why did you block me??', 
-            isRight: false },
-        { id: 302,
-          sender: '@kabirm', 
-          text: 'I need space, please respect that.', 
-          isRight: true
-         },
-        { id: 303, 
-          sender: '@meera_i',
-           text: 'Fine, I will just make a new account.', 
-           isRight: false 
-          }
-      ]
-    },
-    {
-      id: 4,
-      sender: '@fnoor',
-      recipient: '@growthbot1',
-      time: '3h',
-      description: 'Reported: repeated spam messages',
-=======
+  const [safetyRules, setSafetyRules] = useState(INITIAL_SAFETY_RULES);
+
   const handleSendMessage = (text, activeReceiverObj) => {
     if (!text || !text.trim()) return;
 
@@ -364,208 +346,295 @@ const MessageSafety = () => {
         return report;
       })
     );
-    setTimeout(() => {
-      const responseDateTime = formatDateTime();
-      const sampleResponses = [
-        "I have received your message. Thank you for reaching out.",
-        "Please stop contacting me regarding this.",
-        "Understood. I am looking into this matter now.",
-        "I will get back to you as soon as possible.",
-        "Thank you for the update. Duly noted."
-      ];
-      const replyText = sampleResponses[Math.floor(Math.random() * sampleResponses.length)];
+  };
 
-      setReports((prevReports) =>
-        prevReports.map((report) => {
-          if (report.id === selectedId) {
-            const firstMsg = report.messages[0] || {};
-            const receiverReply = {
-              id: Date.now() + 1,
-              senderId: targetRec.id,
-              senderName: targetRec.name,
-              sender: targetRec.handle,
-              receiverId: firstMsg.senderId || 'USR-4412',
-              receiverName: firstMsg.senderName || report.sender.replace('@', ''),
-              recipient: report.sender,
-              text: replyText,
-              dateTime: responseDateTime,
-              isRight: true
-            };
-            return {
-              ...report,
-              messages: [...report.messages, receiverReply]
-            };
-          }
-          return report;
-        })
+  const handleOpenConfirmModal = (actionType, reportObj) => {
+    setConfirmModal({
+      actionType,
+      report: reportObj || reports.find((r) => r.id === selectedId)
+    });
+  };
+
+  const handleExecuteConfirmedAction = () => {
+    if (!confirmModal) return;
+
+    const { actionType, report } = confirmModal;
+
+    if (actionType === 'Delete') {
+      setReports((prev) => prev.filter((r) => r.id !== report.id));
+      showToast(`Deleted conversation with ${report.sender}`);
+      if (selectedId === report.id) {
+        const remaining = reports.filter((r) => r.id !== report.id);
+        if (remaining.length > 0) setSelectedId(remaining[0].id);
+      }
+    } else if (actionType === 'Restrict') {
+      showToast(`Messaging restricted for ${report.sender}`);
+    } else if (actionType === 'Ban') {
+      showToast(`User ${report.sender} banned permanently`);
+    } else if (actionType === 'Resolve') {
+      showToast(`Report for ${report.sender} marked as resolved`);
+    } else if (actionType === 'Block') {
+      showToast(`User ${report.sender} blocked`);
+    } else if (actionType === 'Clear') {
+      setReports((prev) =>
+        prev.map((r) => (r.id === report.id ? { ...r, messages: [] } : r))
       );
-    }, 1000);
+      showToast(`Cleared messages in conversation with ${report.sender}`);
+    } else if (actionType === 'Report') {
+      showToast(`Submitted report for user ${report.sender}`);
+    }
+
+    setConfirmModal(null);
   };
 
-  const handleAddNewReport = (newRec) => {
-    const newReportId = Date.now();
-    const nowFormatted = formatDateTime();
-
-    const newReport = {
-      id: newReportId,
-      sender: '@admin',
-      recipient: newRec.handle,
-      time: 'Just now',
-      description: `Direct message thread with ${newRec.name}`,
->>>>>>> a6444eb (chat)
-      severity: 'Low',
-      type: 'Direct',
-      messages: [
-<<<<<<< HEAD
-        { id: 401,
-           sender: '@fnoor', 
-           text: 'Follow for follow?? DM me!!',
-            isRight: false 
-          },
-        { id: 402, 
-          sender: '@growthbot1', 
-          text: 'Not interested.', 
-          isRight: true },
-        {
-           id: 403, 
-          sender: '@fnoor',
-           text: 'Special offer just for you 🔥', 
-           isRight: false }
-=======
-        {
-          id: Date.now() + 1,
-          senderId: 'USR-0001',
-          senderName: 'Admin',
-          sender: '@admin',
-          receiverId: newRec.id,
-          receiverName: newRec.name,
-          recipient: newRec.handle,
-          text: `Conversation initialized with ${newRec.name} (${newRec.handle})`,
-          dateTime: nowFormatted,
-          isRight: false
-        }
->>>>>>> a6444eb (chat)
-      ]
-    };
-
-    setReports((prev) => [newReport, ...prev]);
-    setSelectedId(newReportId);
-    showToast(`Created new chat with ${newRec.handle}`);
+  const toggleSafetyRule = (ruleId) => {
+    setSafetyRules((prev) =>
+      prev.map((rule) =>
+        rule.id === ruleId ? { ...rule, enabled: !rule.enabled } : rule
+      )
+    );
+    showToast('Updated security settings');
   };
 
-  const handleOpenAddUserModal = () => {
-    setTriggerOpenModal(true);
-  };
-
-  const activeReport = reports.find(r => r.id === selectedId) || reports[0];
+  const activeReport = reports.find((r) => r.id === selectedId) || reports[0];
 
   return (
     <div className="message-safety-page-container">
       <MessageHeader />
       <div className="message-safety-content-wrapper flex-grow-1">
-        <div className="message-safety-tabs">
-          <button className={`message-safety-tab ${activeTab === 'reported' ? 'active' : ''}`}
-<<<<<<< HEAD
-            onClick={() => setActiveTab('reported')}type="button">
-=======
-            onClick={() => setActiveTab('reported')} type="button">
->>>>>>> a6444eb (chat)
-            Reported Messages
-          </button>
-          <button className={`message-safety-tab ${activeTab === 'spam' ? 'active' : ''}`}
-            onClick={() => setActiveTab('spam')} type="button">
-            Spam Manager
-          </button>
-          <button 
-            className={`message-safety-tab ${activeTab === 'rules' ? 'active' : ''}`}
-            onClick={() => setActiveTab('rules')} type="button">
-            Safety Rules
-          </button>
-        </div>
-
         {activeTab === 'reported' && (
           <div className="message-safety-main-card">
             <div className="message-safety-main-layout">
               <div className="message-safety-list-panel">
-<<<<<<< HEAD
-                <ConversationList reports={reports} selectedId={selectedId} 
-                  onSelect={setSelectedId} />
-=======
-                <ConversationList 
-                  reports={reports} 
-                  selectedId={selectedId} 
-                  onSelect={setSelectedId} 
-                  onOpenAddUserModal={handleOpenAddUserModal}
+                <ConversationList
+                  reports={reports}
+                  selectedId={selectedId}
+                  onSelect={setSelectedId}
+                  onOpenAddUser={() => setShowAddUserModal(true)}
                 />
->>>>>>> a6444eb (chat)
               </div>
               <div className="message-safety-window-panel">
-                <ConversationWindow 
-                  report={activeReport} 
-                  onShowToast={showToast} 
+                <ConversationWindow
+                  report={activeReport}
+                  onShowToast={showToast}
                   onSendMessage={handleSendMessage}
-                  onAddNewReport={handleAddNewReport}
-                  triggerOpenAddModal={triggerOpenModal}
-                  onResetTriggerModal={() => setTriggerOpenModal(false)}
+                  onOpenConfirmModal={handleOpenConfirmModal}
+                  onSelectTab={setActiveTab}
                 />
               </div>
             </div>
           </div>
         )}
-
         {activeTab === 'spam' && (
           <div className="message-safety-spam-card">
             <div className="message-safety-section">
               <label className="message-safety-label" htmlFor="message-safety-blocked-input">
                 Blocked words / phrases
               </label>
-              <textarea id="message-safety-blocked-input" className="message-safety-textarea"
-                value={blockedWords} onChange={(e) => setBlockedWords(e.target.value)}
-                rows={3}/>
+              <textarea
+                id="message-safety-blocked-input"
+                className="message-safety-textarea"
+                value={blockedWords}
+                onChange={(e) => setBlockedWords(e.target.value)}
+                rows={3}
+              />
             </div>
-            
             <div className="message-safety-row">
               <div className="message-safety-info">
                 <h5 className="message-safety-row-title">Link scanning</h5>
                 <p className="message-safety-row-desc">Scan shared links for known scam domains</p>
               </div>
               <label className="message-safety-toggle-switch" aria-label="Toggle link scanning">
-                <input type="checkbox" checked={linkScanning} onChange={(e) => setLinkScanning(e.target.checked)} 
-                  className="message-safety-toggle-input" />
+                <input
+                  type="checkbox"
+                  checked={linkScanning}
+                  onChange={(e) => setLinkScanning(e.target.checked)}
+                  className="message-safety-toggle-input"
+                />
                 <span className="message-safety-toggle-slider"></span>
               </label>
             </div>
           </div>
         )}
-
         {activeTab === 'rules' && (
-          <div className="message-safety-rules-card">
-            <div className="message-safety-row">
-              <div className="message-safety-info">
-                <h5 className="message-safety-row-title">Rate limiting</h5>
-                <p className="message-safety-row-desc">Limit messages per minute for new accounts</p>
-              </div>
-              <label className="message-safety-toggle-switch" aria-label="Toggle rate limiting">
-                <input type="checkbox" checked={rateLimiting} onChange={(e) => setRateLimiting(e.target.checked)} 
-                  className="message-safety-toggle-input" />
-                <span className="message-safety-toggle-slider"></span>
-              </label>
+          <div className="d-flex flex-column gap-3">
+            <div>
+              <button
+                className="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-2"
+                onClick={() => setActiveTab('reported')}
+                type="button"
+              >
+                <ArrowLeft size={16} />
+                <span>Back to Conversation</span>
+              </button>
             </div>
-
-            <div className="message-safety-row">
-              <div className="message-safety-info">
-                <h5 className="message-safety-row-title">Restrict unverified DMs</h5>
-                <p className="message-safety-row-desc">Block messages from unverified accounts to verified users by default</p>
-              </div>
-              <label className="message-safety-toggle-switch" aria-label="Toggle restrict unverified DMs">
-                <input type="checkbox" checked={restrictDMs} onChange={(e) => setRestrictDMs(e.target.checked)} 
-                  className="message-safety-toggle-input" />
-                <span className="message-safety-toggle-slider"></span>
-              </label>
+            <div className="message-safety-rules-card">
+              {safetyRules.map((rule) => (
+                <div key={rule.id} className="message-safety-row">
+                  <div className="message-safety-info">
+                    <h5 className="message-safety-row-title">{rule.title}</h5>
+                    <p className="message-safety-row-desc">{rule.desc}</p>
+                  </div>
+                  <label className="message-safety-toggle-switch" aria-label={`Toggle ${rule.title}`}>
+                    <input
+                      type="checkbox"
+                      checked={rule.enabled}
+                      onChange={() => toggleSafetyRule(rule.id)}
+                      className="message-safety-toggle-input"
+                    />
+                    <span className="message-safety-toggle-slider"></span>
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
         )}
       </div>
+      {confirmModal && (
+        <div className="message-safety-modal-overlay">
+          <div className="message-safety-modal-card">
+            <div className="message-safety-modal-header d-flex justify-content-between align-items-center pb-2 border-bottom">
+              <h5 className="message-safety-modal-title mb-0">
+                Confirm {confirmModal.actionType} Action
+              </h5>
+              <button
+                className="message-safety-modal-close"
+                onClick={() => setConfirmModal(null)}
+                type="button"
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="message-safety-modal-body py-3">
+              <p className="mb-1">
+                Are you sure you want to <strong>{confirmModal.actionType.toLowerCase()}</strong> for{' '}
+                <code>{confirmModal.report?.sender}</code>?
+              </p>
+              <small className="text-muted">This action will be logged in the audit trail.</small>
+            </div>
+
+            <div className="message-safety-modal-footer d-flex justify-content-end gap-2 pt-2 border-top">
+              <button
+                className="btn btn-outline-secondary btn-sm"
+                onClick={() => setConfirmModal(null)}
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                className={`btn btn-sm ${confirmModal.actionType === 'Delete' || confirmModal.actionType === 'Ban' || confirmModal.actionType === 'Block' ? 'btn-danger' : 'btn-primary'}`}
+                onClick={handleExecuteConfirmedAction}
+                type="button"
+              >
+                Confirm {confirmModal.actionType}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showAddUserModal && (
+        <div className="message-safety-modal-overlay">
+          <div className="message-safety-modal-card" style={{ width: '460px', maxWidth: '90vw' }}>
+            <div className="message-safety-modal-header d-flex justify-content-between align-items-center pb-2 border-bottom">
+              <h5 className="message-safety-modal-title mb-0">Add New User Conversation</h5>
+              <button
+                className="message-safety-modal-close"
+                onClick={() => setShowAddUserModal(false)}
+                type="button"
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddUserSubmit}>
+              <div className="message-safety-modal-body py-3 d-flex flex-column gap-3">
+                <div className="row g-2">
+                  <div className="col-6">
+                    <label className="form-label fs-7 fw-bold mb-1">Sender Handle</label>
+                    <input
+                      type="text"
+                      className="form-control fs-7"
+                      placeholder="e.g., @alex.m"
+                      value={newSender}
+                      onChange={(e) => setNewSender(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="col-6">
+                    <label className="form-label fs-7 fw-bold mb-1">Recipient Handle</label>
+                    <input
+                      type="text"
+                      className="form-control fs-7"
+                      placeholder="e.g., @sofia.r"
+                      value={newRecipient}
+                      onChange={(e) => setNewRecipient(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="form-label fs-7 fw-bold mb-1">Initial Message</label>
+                  <textarea
+                    className="form-control fs-7"
+                    rows={3}
+                    placeholder="Enter reported message content..."
+                    value={newMessageText}
+                    onChange={(e) => setNewMessageText(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="row g-2">
+                  <div className="col-6">
+                    <label className="form-label fs-7 fw-bold mb-1">Category</label>
+                    <select
+                      className="form-select fs-7"
+                      value={newCategory}
+                      onChange={(e) => setNewCategory(e.target.value)}
+                    >
+                      <option value="Spam">Spam</option>
+                      <option value="Scam">Scam</option>
+                      <option value="Threat">Threat</option>
+                      <option value="Harassment">Harassment</option>
+                      <option value="Phishing">Phishing</option>
+                      <option value="Safe">Safe</option>
+                    </select>
+                  </div>
+
+                  <div className="col-6">
+                    <label className="form-label fs-7 fw-bold mb-1">Severity</label>
+                    <select
+                      className="form-select fs-7"
+                      value={newSeverity}
+                      onChange={(e) => setNewSeverity(e.target.value)}
+                    >
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="message-safety-modal-footer d-flex justify-content-end gap-2 pt-2 border-top">
+                <button
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={() => setShowAddUserModal(false)}
+                  type="button"
+                >
+                  Cancel
+                </button>
+                <button className="btn btn-primary btn-sm px-3" type="submit">
+                  Add Conversation
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       {toast && (
         <div className="message-safety-toast" key={toast.id}>
           <CheckCircle className="message-safety-toast-icon" size={16} />
