@@ -69,6 +69,24 @@
 .chat-input-send-btn:active {
   transform: scale(0.95);
 }
+
+.chat-input-preview-bar {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  animation: fadein 0.15s ease-out;
+}
+
+.chat-input-preview-thumbnail {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+}
+
+.chat-input-audio-player {
+  height: 36px;
+  max-width: 200px;
+}
 .chat-input-emoji-picker-popup {
   position: absolute;
   bottom: calc(100% + 8px);

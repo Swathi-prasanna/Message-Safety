@@ -214,20 +214,80 @@ const INITIAL_REPORTS = [
 ];
 
 const INITIAL_SAFETY_RULES = [
-  { id: 'rateLimiting', title: 'Rate Limiting', desc: 'Limit the number of messages new accounts can send per minute.', enabled: true },
-  { id: 'restrictUnverified', title: 'Restrict Unverified DMs', desc: 'Block direct messages from unverified accounts to verified users.', enabled: false },
-  { id: 'blockSuspiciousLinks', title: 'Block Suspicious Links', desc: 'Automatically detect and block malicious or phishing URLs.', enabled: true },
-  { id: 'spamKeywordFilter', title: 'Spam Keyword Filter', desc: 'Detect and filter messages containing spam keywords.', enabled: true },
-  { id: 'duplicateDetection', title: 'Duplicate Message Detection', desc: 'Prevent users from repeatedly sending the same message.', enabled: true },
-  { id: 'floodProtection', title: 'Flood Protection', desc: 'Temporarily limit messaging when too many messages are sent in a short time.', enabled: true },
-  { id: 'maxMsgLength', title: 'Maximum Message Length', desc: 'Restrict the maximum number of characters per message.', enabled: true },
-  { id: 'fileUploadRestrictions', title: 'File Upload Restrictions', desc: 'Allow only approved file types and enforce maximum upload size.', enabled: false },
-  { id: 'offensiveWordFilter', title: 'Offensive Word Filter', desc: 'Automatically detect and block abusive or inappropriate language.', enabled: true },
-  { id: 'autoHideReported', title: 'Auto Hide Reported Messages', desc: 'Automatically hide messages that exceed the report threshold until reviewed.', enabled: true },
-  { id: 'captchaNewAccounts', title: 'CAPTCHA for New Accounts', desc: 'Require CAPTCHA verification before sending messages.', enabled: false },
-  { id: 'profanityDetection', title: 'Profanity Detection', desc: 'Detect and filter offensive language in real time.', enabled: true },
-  { id: 'linkPreviewProtection', title: 'Link Preview Protection', desc: 'Scan URLs before generating previews to prevent malicious content.', enabled: true },
-  { id: 'mediaScanning', title: 'Media Content Scanning', desc: 'Scan uploaded images and files for unsafe or prohibited content.', enabled: true }
+  { id: 'rateLimiting', 
+    title: 'Rate Limiting',
+     desc: 'Limit the number of messages new accounts can send per minute.', 
+     enabled: true },
+  {
+     id: 'restrictUnverified', 
+     title: 'Restrict Unverified DMs', 
+     desc: 'Block direct messages from unverified accounts to verified users.', 
+     enabled: false },
+  { 
+    id: 'blockSuspiciousLinks',
+     title: 'Block Suspicious Links',
+      desc: 'Automatically detect and block malicious or phishing URLs.', 
+      enabled: true },
+  { 
+    id: 'spamKeywordFilter', 
+    title: 'Spam Keyword Filter',
+     desc: 'Detect and filter messages containing spam keywords.',
+      enabled: true },
+  {
+     id: 'duplicateDetection',
+      title: 'Duplicate Message Detection',
+       desc: 'Prevent users from repeatedly sending the same message.',
+        enabled: true },
+  {
+     id: 'floodProtection', 
+     title: 'Flood Protection', 
+     desc: 'Temporarily limit messaging when too many messages are sent in a short time.',
+      enabled: true },
+  {
+     id: 'maxMsgLength', 
+     title: 'Maximum Message Length',
+     desc: 'Restrict the maximum number of characters per message.', 
+     enabled: true },
+  { 
+    id: 'fileUploadRestrictions', 
+    title: 'File Upload Restrictions', 
+    desc: 'Allow only approved file types and enforce maximum upload size.', 
+    enabled: false },
+  { 
+    id: 'offensiveWordFilter',
+    title: 'Offensive Word Filter',
+     desc: 'Automatically detect and block abusive or inappropriate language.',
+     enabled: true 
+    },
+  { 
+    id: 'autoHideReported', 
+    title: 'Auto Hide Reported Messages', 
+    desc: 'Automatically hide messages that exceed the report threshold until reviewed.',
+    enabled: true
+   },
+  {
+     id: 'captchaNewAccounts',
+      title: 'CAPTCHA for New Accounts', 
+      desc: 'Require CAPTCHA verification before sending messages.', 
+      enabled: false 
+    },
+  { 
+    id: 'profanityDetection',
+    title: 'Profanity Detection', 
+    desc: 'Detect and filter offensive language in real time.', 
+    enabled: true 
+  },
+  {
+     id: 'linkPreviewProtection', 
+     title: 'Link Preview Protection',
+      desc: 'Scan URLs before generating previews to prevent malicious content.', 
+      enabled: true 
+    },
+  { 
+    id: 'mediaScanning', 
+    title: 'Media Content Scanning', 
+    desc: 'Scan uploaded images and files for unsafe or prohibited content.',
+    enabled: true }
 ];
 
 const MessageSafety = () => {

@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: var(--color-bg);
+  background: #f0f2f5;
 }
 
 .message-safety-content-wrapper {
@@ -15,6 +15,7 @@
   margin: 0 auto;
   overflow-y: auto;
   height: calc(100vh - 65px);
+  background: #f0f2f5;
 }
 
 .message-safety-tabs {

@@ -1,0 +1,126 @@
+.attachment-menu-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.attachment-menu-toggle-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.attachment-menu-toggle-btn:hover,
+.attachment-menu-toggle-btn.active {
+  background: var(--color-surface-offset-2);
+  color: var(--color-primary);
+}
+
+.attachment-menu-popup {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 0;
+  width: 220px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  padding: 8px 0;
+  z-index: 1100;
+  transform-origin: bottom left;
+  animation: attachmentMenuScaleIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.attachment-menu-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.attachment-menu-item {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  text-align: left;
+}
+
+.attachment-menu-item:hover {
+  background: var(--color-surface-offset);
+}
+
+.attachment-menu-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.attachment-menu-item:hover .attachment-menu-icon-circle {
+  transform: scale(1.08);
+}
+
+.attachment-menu-item-title {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.attachment-menu-camera-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.attachment-menu-camera-modal-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  width: 520px;
+  max-width: 92vw;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: attachmentMenuScaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.attachment-menu-camera-body {
+  width: 100%;
+  height: 320px;
+  background: #000000;
+  overflow: hidden;
+}
+
+.attachment-menu-camera-video,
+.attachment-menu-camera-preview-img {
+  object-fit: cover;
+}
+
+@keyframes attachmentMenuScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

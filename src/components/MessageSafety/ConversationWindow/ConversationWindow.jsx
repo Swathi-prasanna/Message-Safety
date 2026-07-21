@@ -1,43 +1,43 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  MessageSquareOff, 
-  Ban, 
-  CheckCircle, 
-  Send, 
-  Smile, 
-  Paperclip, 
-  CheckCheck, 
-  UserX,
-  Trash2,
-  FileText,
-  Search,
-  Bell,
-  BellOff,
-  MoreVertical,
-  Info,
-  CheckSquare,
-  Star,
-  Download,
-  Archive,
-  Trash,
-  AlertTriangle,
-  X,
-  ShieldAlert,
-  ShieldCheck,
-  Heart,
-  CircleMinus,
-  Flag
-} from 'lucide-react';
+import { MessageSquareOff, Ban, CheckCircle, Send } from 'lucide-react';
+import { Smile, Paperclip, CheckCheck, UserX,Trash2} from 'lucide-react';
+import {  Trash2,FileText,Search,Bell,BellOff} from 'lucide-react';
+import { MoreVertical,Info,CheckSquare,Star} from 'lucide-react';
+import { Download,Archive,Trash,AlertTriangle,X} from 'lucide-react';
+import { ShieldAlert,ShieldCheck,Heart,CircleMinus,Flag} from 'lucide-react';
+
 import ChatInput from '../ChatInput/ChatInput';
 import './ConversationWindow.css';
 
 const DEFAULT_RECEIVERS = [
-  { id: 'USR-3301', name: 'Sofia Rodriguez', handle: '@sofia.r' },
-  { id: 'USR-9943', name: 'Spammer99', handle: '@spammer99' },
-  { id: 'USR-1154', name: 'Kabir Mehta', handle: '@kabirm' },
-  { id: 'USR-5520', name: 'GrowthBot1', handle: '@growthbot1' },
-  { id: 'USR-6610', name: 'Alex Morgan', handle: '@alex.m' },
-  { id: 'USR-8840', name: 'David Kim', handle: '@david.k' }
+  {
+     id: 'USR-3301', 
+    name: 'Sofia Rodriguez', 
+    handle: '@sofia.r' },
+  { 
+    id: 'USR-9943', 
+    name: 'Spammer99',
+     handle: '@spammer99' },
+  { 
+    id: 'USR-1154',
+     name: 'Kabir Mehta',
+      handle: '@kabirm' 
+    },
+  {
+     id: 'USR-5520',
+      name: 'GrowthBot1', 
+      handle: '@growthbot1' 
+    },
+  { 
+    id: 'USR-6610',
+     name: 'Alex Morgan',
+      handle: '@alex.m' 
+    },
+  {
+     id: 'USR-8840', 
+     name: 'David Kim', 
+     handle: '@david.k' 
+    }
 ];
 
 const ConversationWindow = ({ 
@@ -295,18 +295,6 @@ const ConversationWindow = ({
               <button 
                 className="conversation-window-dropdown-item" 
                 onClick={() => {
-                  setShowDropdown(false);
-                  if (onShowToast) onShowToast('Conversation archived');
-                }}
-                type="button"
-              >
-                <Archive size={16} />
-                <span>Archive Conversation</span>
-              </button>
-
-              <button 
-                className="conversation-window-dropdown-item" 
-                onClick={() => {
                   setShowSpamManagerModal(true);
                   setShowDropdown(false);
                 }}
@@ -486,17 +474,6 @@ const ConversationWindow = ({
                   <span>Add to Favorites</span>
                 </button>
 
-                <button 
-                  className="conversation-window-offcanvas-action-row" 
-                  onClick={() => {
-                    setShowOffcanvas(false);
-                    if (onShowToast) onShowToast('Conversation archived');
-                  }}
-                  type="button"
-                >
-                  <Archive size={18} className="conversation-window-offcanvas-icon" />
-                  <span>Archive Conversation</span>
-                </button>
 
                 <button 
                   className="conversation-window-offcanvas-action-row" 
