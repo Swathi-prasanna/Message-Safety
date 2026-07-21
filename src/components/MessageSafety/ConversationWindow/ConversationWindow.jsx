@@ -28,6 +28,7 @@ import {
   CircleMinus,
   Flag
 } from 'lucide-react';
+import ChatInput from '../ChatInput/ChatInput';
 import './ConversationWindow.css';
 
 const DEFAULT_RECEIVERS = [
@@ -421,26 +422,14 @@ const ConversationWindow = ({
         })}
         <div ref={messagesEndRef} />
       </div>
-      <div className="conversation-window-footer p-3">
-        <form onSubmit={handleFormSubmit} className="conversation-window-footer-form d-flex align-items-center gap-2">
-          <button type="button" className="conversation-window-footer-icon-btn border-0 bg-transparent" title="Add Emoji">
-            <Smile size={20} />
-          </button>
-          <button type="button" className="conversation-window-footer-icon-btn border-0 bg-transparent" title="Attach File">
-            <Paperclip size={20} />
-          </button>
-          <input 
-            type="text"
-            className="form-control conversation-window-footer-input border-0 shadow-none flex-grow-1"
-            placeholder={`Type a message to ${activeReceiverObj.handle}...`}
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-          />
-          <button type="submit" className="conversation-window-footer-send-btn d-flex align-items-center justify-content-center">
-            <Send size={16} />
-          </button>
-        </form>
-      </div>
+      <ChatInput
+        onSendMessage={(msgText) => {
+          if (onSendMessage) {
+            onSendMessage(msgText, activeReceiverObj);
+          }
+        }}
+        placeholder={`Type a message to ${activeReceiverObj.handle}...`}
+      />
       {showOffcanvas && (
         <div className="conversation-window-offcanvas-backdrop" onClick={() => setShowOffcanvas(false)}>
           <div className="conversation-window-offcanvas-panel p-3" onClick={(e) => e.stopPropagation()}>
