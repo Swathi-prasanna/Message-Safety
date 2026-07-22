@@ -294,7 +294,7 @@ const ConversationWindow = ({
                 onClick={() => handleActionClick('Mute')}
                 type="button"
               >
-                <VolumeX size={16} />
+                <VolumeX size={16} />  
                 <span>Mute User</span>
               </button>
 

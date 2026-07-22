@@ -2,21 +2,21 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #ffffff;
-  border-right: 1px solid #e0e0e0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
 }
 
 .conversation-list-header-row {
-  background: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .conversation-list-user-avatar-circle {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-full);
-  background: #e8f0fe;
-  color: #0a66c2;
+  background: var(--color-primary-highlight);
+  color: var(--color-primary);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
 .conversation-list-title {
   font-size: 15px;
   font-weight: 700;
-  color: #191919;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -45,64 +45,64 @@
 
 .conversation-list-filter-toggle-btn:hover,
 .conversation-list-filter-toggle-btn.active {
-  background: #edf3f8;
-  color: #0a66c2;
-  border-color: #e0e0e0;
+  background: var(--color-surface-offset-2);
+  color: var(--color-primary);
+  border-color: var(--color-border);
 }
 
 .conversation-list-search-wrapper {
-  background: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .conversation-list-search-box {
-  background: #f4f2ee;
-  border: 1px solid #e0e0e0;
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   transition: border-color 0.15s ease;
 }
 
 .conversation-list-search-box:focus-within {
-  border-color: #0a66c2;
-  box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.15);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-highlight);
 }
 
 .conversation-list-search-icon {
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 .conversation-list-search-input {
   background: transparent;
   font-size: 13px;
-  color: #191919;
+  color: var(--color-text);
   outline: none;
 }
 
 .conversation-list-filter-bar {
-  background: #f4f2ee;
-  border-color: #e0e0e0;
+  background: var(--color-surface-offset);
+  border-color: var(--color-border);
 }
 
 .conversation-list-filter-label {
   display: block;
   font-size: 11px;
   font-weight: 600;
-  color: #666666;
+  color: var(--color-text-muted);
   margin-bottom: 2px;
 }
 
 .conversation-list-filter-select {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 4px 8px;
   font-size: 12px;
-  color: #191919;
+  color: var(--color-text);
   outline: none;
 }
 
 .conversation-list-filter-select:focus {
-  border-color: #0a66c2;
+  border-color: var(--color-primary);
 }
 
 .conversation-list-items-wrapper {
@@ -121,20 +121,20 @@
 }
 
 .conversation-list-item:hover {
-  background: #f4f2ee;
+  background: var(--color-surface-offset);
 }
 
 .conversation-list-item.active {
-  background: #edf3f8;
-  border-left-color: #0a66c2;
+  background: var(--color-surface-offset-2);
+  border-left-color: var(--color-primary);
 }
 
 .conversation-list-item-avatar-circle {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-full);
-  background: #e8f0fe;
-  color: #0a66c2;
+  background: var(--color-primary-highlight);
+  color: var(--color-primary);
   font-weight: 700;
   font-size: 14px;
   display: flex;
@@ -145,17 +145,17 @@
 .conversation-list-item-title {
   font-size: 14px;
   font-weight: 700;
-  color: #191919;
+  color: var(--color-text);
 }
 
 .conversation-list-item-time {
   font-size: 11.5px;
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 .conversation-list-item-desc {
   font-size: 12.5px;
-  color: #666666;
+  color: var(--color-text-muted);
   line-height: 1.3;
 }
 
@@ -167,49 +167,49 @@
 }
 
 .conversation-list-badge-severity-medium {
-  border: 1px solid rgba(209, 153, 0, 0.4);
-  color: #b45309;
-  background: #fef3c7;
+  border: 1px solid var(--color-warning-highlight);
+  color: var(--color-warning);
+  background: var(--color-warning-highlight);
 }
 
 .conversation-list-badge-severity-high {
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  color: #dc2626;
-  background: #fee2e2;
+  border: 1px solid var(--color-error-highlight);
+  color: var(--color-error);
+  background: var(--color-error-highlight);
 }
 
 .conversation-list-badge-severity-low {
-  border: 1px solid #cbd5e1;
-  color: #475569;
-  background: #f1f5f9;
+  border: 1px solid var(--color-success-highlight);
+  color: var(--color-success);
+  background: var(--color-success-highlight);
 }
 
 .conversation-list-badge-reason-scam {
-  border: 1px solid rgba(217, 119, 6, 0.4);
-  color: #d97706;
-  background: #fffbe6;
+  border: 1px solid var(--color-warning-highlight);
+  color: var(--color-warning);
+  background: var(--color-warning-highlight);
 }
 
 .conversation-list-badge-reason-threat {
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  color: #dc2626;
-  background: #fee2e2;
+  border: 1px solid var(--color-error-highlight);
+  color: var(--color-error);
+  background: var(--color-error-highlight);
 }
 
 .conversation-list-badge-reason-harassment {
-  border: 1px solid rgba(147, 51, 234, 0.3);
-  color: #9333ea;
-  background: #f3e8ff;
+  border: 1px solid var(--color-purple-highlight);
+  color: var(--color-purple);
+  background: var(--color-purple-highlight);
 }
 
 .conversation-list-badge-reason-spam {
-  border: 1px solid rgba(217, 119, 6, 0.4);
-  color: #d97706;
-  background: #fef3c7;
+  border: 1px solid var(--color-gold-highlight);
+  color: var(--color-gold);
+  background: var(--color-gold-highlight);
 }
 
 .conversation-list-badge-reason-direct {
-  border: 1px solid #0a66c2;
-  color: #0a66c2;
-  background: #e8f0fe;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-highlight);
 }

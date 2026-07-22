@@ -37,12 +37,14 @@
   color: var(--color-primary);
 }
 
-.chat-input-text-field {
-  background: transparent;
-  border: none;
+.chat-input-text-field,
+.chat-input-text-field:focus {
+  background: transparent !important;
+  border: none !important;
   font-size: 14px;
-  color: var(--color-text);
+  color: var(--color-text) !important;
   padding: 8px 12px;
+  box-shadow: none !important;
 }
 
 .chat-input-text-field::placeholder {

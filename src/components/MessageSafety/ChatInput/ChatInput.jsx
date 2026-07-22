@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import EmojiPicker from 'emoji-picker-react';
-import { Smile, Send, X} from 'lucide-react';
+import { Smile, Send, X, Music} from 'lucide-react';
 import { FileText } from 'lucide-react';
-import {Music} from 'lucide-react';
 import {Image as ImageIcon, Video as VideoIcon } from 'lucide-react';
 import AttachmentMenu from '../AttachmentMenu/AttachmentMenu';
 import './ChatInput.css';

@@ -3,7 +3,6 @@
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: #f0f2f5;
 }
 
 .message-safety-content-wrapper {
@@ -15,7 +14,6 @@
   margin: 0 auto;
   overflow-y: auto;
   height: calc(100vh - 65px);
-  background: #f0f2f5;
 }
 
 .message-safety-tabs {
@@ -303,4 +301,23 @@
   font-size: 13.5px;
   font-weight: 500;
   color: var(--color-text);
+}
+
+.message-safety-modal-card .form-control,
+.message-safety-modal-card .form-select {
+  background-color: var(--color-surface-offset) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.message-safety-modal-card .form-control::placeholder {
+  color: var(--color-text-muted) !important;
+}
+
+.message-safety-modal-card .form-control:focus,
+.message-safety-modal-card .form-select:focus {
+  background-color: var(--color-surface-offset) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px var(--color-primary-highlight) !important;
 }
