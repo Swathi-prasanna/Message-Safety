@@ -442,6 +442,10 @@ const MessageSafety = () => {
       showToast(`Cleared messages in conversation with ${report.sender}`);
     } else if (actionType === 'Report') {
       showToast(`Submitted report for user ${report.sender}`);
+    } else if (actionType === 'Suspend') {
+      showToast(`User ${report.sender} account suspended`);
+    } else if (actionType === 'DeleteMsg') {
+      showToast(`Reported message has been deleted`);
     }
 
     setConfirmModal(null);
@@ -555,7 +559,7 @@ const MessageSafety = () => {
           <div className="message-safety-modal-card">
             <div className="message-safety-modal-header d-flex justify-content-between align-items-center pb-2 border-bottom">
               <h5 className="message-safety-modal-title mb-0">
-                Confirm {confirmModal.actionType} Action
+                Confirm {confirmModal.actionType === 'DeleteMsg' ? 'Delete Message' : confirmModal.actionType} Action
               </h5>
               <button
                 className="message-safety-modal-close"
@@ -569,7 +573,7 @@ const MessageSafety = () => {
 
             <div className="message-safety-modal-body py-3">
               <p className="mb-1">
-                Are you sure you want to <strong>{confirmModal.actionType.toLowerCase()}</strong> for{' '}
+                Are you sure you want to <strong>{confirmModal.actionType === 'DeleteMsg' ? 'delete message' : confirmModal.actionType.toLowerCase()}</strong> for{' '}
                 <code>{confirmModal.report?.sender}</code>?
               </p>
               <small className="text-muted">This action will be logged in the audit trail.</small>
@@ -584,11 +588,11 @@ const MessageSafety = () => {
                 Cancel
               </button>
               <button
-                className={`btn btn-sm ${confirmModal.actionType === 'Delete' || confirmModal.actionType === 'Ban' || confirmModal.actionType === 'Block' ? 'btn-danger' : 'btn-primary'}`}
+                className={`btn btn-sm ${confirmModal.actionType === 'Delete' || confirmModal.actionType === 'Ban' || confirmModal.actionType === 'Block' || confirmModal.actionType === 'Suspend' || confirmModal.actionType === 'DeleteMsg' ? 'btn-danger' : 'btn-primary'}`}
                 onClick={handleExecuteConfirmedAction}
                 type="button"
               >
-                Confirm {confirmModal.actionType}
+                Confirm {confirmModal.actionType === 'DeleteMsg' ? 'Delete Message' : confirmModal.actionType}
               </button>
             </div>
           </div>

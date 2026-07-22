@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquareOff, Ban, CheckCircle, Send } from 'lucide-react';
-import { Smile, Paperclip, CheckCheck, UserX,Trash2} from 'lucide-react';
-import {  Trash2,FileText,Search,Bell,BellOff} from 'lucide-react';
+import { Smile, Paperclip, CheckCheck, UserX, Trash2, VolumeX, UserMinus } from 'lucide-react';
+import { FileText,Search,Bell,BellOff} from 'lucide-react';
 import { MoreVertical,Info,CheckSquare,Star} from 'lucide-react';
 import { Download,Archive,Trash,AlertTriangle,X} from 'lucide-react';
-import { ShieldAlert,ShieldCheck,Heart,CircleMinus,Flag} from 'lucide-react';
+import { ShieldAlert,ShieldCheck,CircleMinus,Flag} from 'lucide-react';
 
 import ChatInput from '../ChatInput/ChatInput';
 import './ConversationWindow.css';
@@ -58,7 +58,6 @@ const ConversationWindow = ({
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedMsgIds, setSelectedMsgIds] = useState([]);
   const [isMuted, setIsMuted] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const [showSpamManagerModal, setShowSpamManagerModal] = useState(false);
   const [enableSpamFilter, setEnableSpamFilter] = useState(true);
@@ -118,8 +117,19 @@ const ConversationWindow = ({
   const handleActionClick = (actionType) => {
     setShowDropdown(false);
     setShowOffcanvas(false);
-    if (onOpenConfirmModal) {
-      onOpenConfirmModal(actionType, report);
+    const criticalActions = ['Ban', 'Suspend', 'DeleteMsg', 'Delete', 'Clear', 'Block', 'Report'];
+    if (criticalActions.includes(actionType)) {
+      if (onOpenConfirmModal) {
+        onOpenConfirmModal(actionType, report);
+      }
+    } else {
+      if (actionType === 'Warn') {
+        if (onShowToast) onShowToast(`Warning sent to ${report.sender}`);
+      } else if (actionType === 'Mute') {
+        if (onShowToast) onShowToast(`User ${report.sender} muted for 24 hours`);
+      } else if (actionType === 'Resolve') {
+        if (onShowToast) onShowToast(`Report for ${report.sender} marked as resolved`);
+      }
     }
   };
 
@@ -174,7 +184,6 @@ const ConversationWindow = ({
               <span>{report.sender}</span>
               <span className="conversation-window-header-arrow">&rarr;</span>
               <span>{activeReceiverObj.handle}</span>
-              {isFavorite && <Heart size={14} className="text-danger fill-danger" />}
             </h5>
             <span className="conversation-window-header-subtitle">
               Reported for: <strong>{report.type}</strong> ({report.severity} Severity)
@@ -183,27 +192,6 @@ const ConversationWindow = ({
           </div>
         </div>
         <div className="conversation-window-header-actions d-flex align-items-center gap-1 position-relative" ref={dropdownRef}>
-          <button 
-            className={`conversation-window-icon-btn ${showInChatSearch ? 'active' : ''}`}
-            type="button" 
-            onClick={() => setShowInChatSearch(!showInChatSearch)}
-            title="Search Messages"
-          >
-            <Search size={18} />
-          </button>
-
-          <button 
-            className={`conversation-window-icon-btn ${isMuted ? 'active' : ''}`}
-            type="button" 
-            onClick={() => {
-              setIsMuted(!isMuted);
-              if (onShowToast) onShowToast(isMuted ? 'Unmuted notifications' : 'Muted notifications');
-            }}
-            title={isMuted ? 'Unmute Notifications' : 'Mute Notifications'}
-          >
-            {isMuted ? <BellOff size={18} /> : <Bell size={18} />}
-          </button>
-
           <button 
             className={`conversation-window-icon-btn ${showDropdown ? 'active' : ''}`}
             type="button" 
@@ -214,6 +202,8 @@ const ConversationWindow = ({
           </button>
           {showDropdown && (
             <div className="conversation-window-dropdown-menu">
+              <div className="conversation-window-dropdown-group-header">Conversation Tools</div>
+              
               <button 
                 className="conversation-window-dropdown-item" 
                 onClick={() => { setShowOffcanvas(true); setShowDropdown(false); }}
@@ -241,8 +231,6 @@ const ConversationWindow = ({
                 <span>{isSelectMode ? 'Cancel Selection' : 'Select Messages'}</span>
               </button>
 
-              <div className="conversation-window-dropdown-divider"></div>
-
               <button 
                 className="conversation-window-dropdown-item" 
                 onClick={() => {
@@ -255,8 +243,6 @@ const ConversationWindow = ({
                 <span>Safety Rules</span>
               </button>
 
-              <div className="conversation-window-dropdown-divider"></div>
-
               <button 
                 className="conversation-window-dropdown-item" 
                 onClick={() => {
@@ -268,19 +254,6 @@ const ConversationWindow = ({
               >
                 {isMuted ? <Bell size={16} /> : <BellOff size={16} />}
                 <span>{isMuted ? 'Unmute Notifications' : 'Mute Notifications'}</span>
-              </button>
-
-              <button 
-                className="conversation-window-dropdown-item" 
-                onClick={() => {
-                  setIsFavorite(!isFavorite);
-                  setShowDropdown(false);
-                  if (onShowToast) onShowToast(isFavorite ? 'Removed from favorites' : 'Added to favorites');
-                }}
-                type="button"
-              >
-                <Heart size={16} className={isFavorite ? 'text-danger fill-danger' : ''} />
-                <span>{isFavorite ? 'Remove Favorite' : 'Add to Favorites'}</span>
               </button>
 
               <button 
@@ -305,6 +278,64 @@ const ConversationWindow = ({
               </button>
 
               <div className="conversation-window-dropdown-divider"></div>
+              <div className="conversation-window-dropdown-group-header">Moderation Actions</div>
+
+              <button 
+                className="conversation-window-dropdown-item" 
+                onClick={() => handleActionClick('Warn')}
+                type="button"
+              >
+                <AlertTriangle size={16} />
+                <span>Warn User</span>
+              </button>
+
+              <button 
+                className="conversation-window-dropdown-item" 
+                onClick={() => handleActionClick('Mute')}
+                type="button"
+              >
+                <VolumeX size={16} />
+                <span>Mute User</span>
+              </button>
+
+              <button 
+                className="conversation-window-dropdown-item" 
+                onClick={() => handleActionClick('Suspend')}
+                type="button"
+              >
+                <UserMinus size={16} />
+                <span>Suspend User</span>
+              </button>
+
+              <button 
+                className="conversation-window-dropdown-item" 
+                onClick={() => handleActionClick('Ban')}
+                type="button"
+              >
+                <Ban size={16} />
+                <span>Ban User</span>
+              </button>
+
+              <button 
+                className="conversation-window-dropdown-item" 
+                onClick={() => handleActionClick('DeleteMsg')}
+                type="button"
+              >
+                <Trash2 size={16} />
+                <span>Delete Message</span>
+              </button>
+
+              <button 
+                className="conversation-window-dropdown-item" 
+                onClick={() => handleActionClick('Resolve')}
+                type="button"
+              >
+                <CheckCircle size={16} />
+                <span>Resolve Report</span>
+              </button>
+
+              <div className="conversation-window-dropdown-divider"></div>
+              <div className="conversation-window-dropdown-group-header text-danger">Danger Zone</div>
 
               <button 
                 className="conversation-window-dropdown-item text-danger" 
@@ -323,8 +354,6 @@ const ConversationWindow = ({
                 <Trash2 size={16} />
                 <span>Delete Conversation</span>
               </button>
-
-              <div className="conversation-window-dropdown-divider"></div>
 
               <button 
                 className="conversation-window-dropdown-item text-danger" 
@@ -461,19 +490,6 @@ const ConversationWindow = ({
                   <BellOff size={18} className="conversation-window-offcanvas-icon" />
                   <span>Mute Notifications</span>
                 </button>
-
-                <button 
-                  className="conversation-window-offcanvas-action-row" 
-                  onClick={() => {
-                    setIsFavorite(!isFavorite);
-                    if (onShowToast) onShowToast(isFavorite ? 'Removed from favorites' : 'Added to favorites');
-                  }}
-                  type="button"
-                >
-                  <Heart size={18} className={`conversation-window-offcanvas-icon ${isFavorite ? 'text-danger fill-danger' : ''}`} />
-                  <span>Add to Favorites</span>
-                </button>
-
 
                 <button 
                   className="conversation-window-offcanvas-action-row" 
